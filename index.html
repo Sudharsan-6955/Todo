@@ -287,8 +287,8 @@
     let tasks = document.getElementById('Tasks')
     let doneTask = document.getElementById('doneTask')
 
-    let storage = new Array()
-    let completedTasks = new Array()
+    let storage = {}
+    let completedTasks = new Set()
 
     // Load tasks from local storage
     function loadTasks() {
@@ -297,29 +297,29 @@
         
         if (savedTasks) {
             storage = JSON.parse(savedTasks)
-            renderTasks()
         }
         
         if (savedCompleted) {
-            completedTasks = JSON.parse(savedCompleted)
-            renderCompletedTasks()
+            completedTasks = new Set(JSON.parse(savedCompleted))
         }
+        
+        renderTasks()
+        renderCompletedTasks()
     }
 
     // Save tasks to local storage
     function saveTasks() {
         localStorage.setItem('todoTasks', JSON.stringify(storage))
-        localStorage.setItem('completedTasks', JSON.stringify(completedTasks))
+        localStorage.setItem('completedTasks', JSON.stringify(Array.from(completedTasks)))
     }
 
     // Render active tasks
     function renderTasks() {
-        const completedSet = new Set(completedTasks)
         const tasksHTML = ['<h1>Tasks</h1>']
         
-        storage.forEach((task, index) => {
-            if (task !== null && !completedSet.has(index)) {
-                tasksHTML.push(`<li id=${index}><button onclick=complete(${index})><i class="fa fa-circle-play"></i> ${task}</button></li>`)
+        Object.entries(storage).forEach(([id, task]) => {
+            if (task && !completedTasks.has(id)) {
+                tasksHTML.push(`<li id="task-${id}"><button onclick=complete("${id}")><i class="fa fa-circle-play"></i> ${task}</button></li>`)
             }
         })
         
@@ -330,9 +330,9 @@
     function renderCompletedTasks() {
         const completedHTML = []
         
-        completedTasks.forEach(index => {
-            if (storage[index]) {
-                completedHTML.push(`<li>${storage[index]}</li>`)
+        completedTasks.forEach(id => {
+            if (storage[id]) {
+                completedHTML.push(`<li>${storage[id]}</li>`)
             }
         })
         
@@ -341,7 +341,8 @@
 
     submit.addEventListener('click', (event) => {
         if (newTask.value != '') {
-            storage.push(newTask.value)
+            const id = Date.now().toString()
+            storage[id] = newTask.value
             console.log(newTask.value)
             saveTasks()
             renderTasks()
@@ -353,8 +354,8 @@
     })
 
     function complete(id) {
-        if (!completedTasks.includes(id)) {
-            completedTasks.push(id)
+        if (!completedTasks.has(id)) {
+            completedTasks.add(id)
             saveTasks()
             renderTasks()
             renderCompletedTasks()
