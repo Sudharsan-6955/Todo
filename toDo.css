@@ -1,0 +1,127 @@
+:root{
+  --bg1: #FFDEE9;
+  --bg2: #B5FFFC;
+  --card: rgba(255,255,255,0.9);
+  --accent: #6C63FF;
+  --accent2: #FF6B6B;
+  --text: #222;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  padding:40px;
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: linear-gradient(135deg,var(--bg1) 0%, var(--bg2) 100%);
+  color:var(--text);
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+}
+
+/* app card */
+.app{
+  width:100%;
+  max-width:900px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(250,250,255,0.9));
+  border-radius:16px;
+  padding:24px;
+  box-shadow: 0 12px 30px rgba(10,10,30,0.12);
+}
+
+/* header */
+.app-title{
+  margin:0 0 12px 0;
+  font-size:clamp(20px,3.2vw,28px);
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+/* input area */
+.input-wrap{
+  display:flex;
+  gap:12px;
+  margin-bottom:18px;
+}
+#newTask{
+  flex:1;
+  padding:12px 14px;
+  border-radius:10px;
+  border:1px solid rgba(0,0,0,0.06);
+  font-size:16px;
+  outline:none;
+  background:linear-gradient(180deg,#fff,#fbfbff);
+}
+#newTask:focus{box-shadow:0 0 0 4px rgba(108,99,255,0.08)}
+#submit{
+  background:linear-gradient(90deg,var(--accent),#FF8A00);
+  color:#fff;
+  border:none;
+  padding:12px 16px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:600;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+}
+
+/* section titles */
+.section-title{
+  margin:18px 0 8px 0;
+  font-size:18px;
+}
+
+/* lists */
+.tasks-list, .done-list{
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:grid;
+  gap:10px;
+}
+
+.tasks-list li{
+  background:linear-gradient(90deg,#ffffff,#f6f6ff);
+  padding:10px;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  border:1px solid rgba(0,0,0,0.04);
+}
+
+.tasks-list li button{
+  all:unset;
+  cursor:pointer;
+  width:100%;
+  text-align:left;
+  font-size:16px;
+  padding:8px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.tasks-list li button i{ color:var(--accent); min-width:18px; text-align:center; }
+
+/* completed items */
+.done-list li{
+  background:linear-gradient(90deg,#eaffef,#f2fff6);
+  padding:10px;
+  border-radius:10px;
+  color:#1b7a1b;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  border:1px solid rgba(27,122,27,0.08);
+}
+
+/* responsive */
+@media (max-width:600px){
+  body{padding:16px}
+  .input-wrap{flex-direction:column}
+  #submit{width:100%; justify-content:center}
+  .app{padding:16px}
+}

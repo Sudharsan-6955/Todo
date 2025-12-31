@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="toDo.css">
+</head>
+
+<body>
+    <div class="app">
+        <h1 class="app-title"><i class="fa fa-list-check"></i> To Do</h1>
+
+        <div class="input-wrap">
+            <input type="text" name="Tasks" id="newTask" placeholder="Add a new task..." />
+            <button type="submit" id="submit" aria-label="Add task"><i class="fa fa-plus"></i> Add</button>
+        </div>
+
+        <h2 class="section-title">Tasks</h2>
+        <ul id="Tasks" class="tasks-list">
+            <h1>Tasks</h1>
+        </ul>
+
+        <h2 class="section-title">Completed</h2>
+        <ul id="doneTask" class="done-list">
+
+        </ul>
+    </div>
+
+</body>
+<script>
+    // let username = prompt('Hey Hii!! Your Wonderfull NAME ?')
+    let username = "";
+
+    while (!username) {
+        username = prompt('Hey Hii!! Your Wonderfull NAME ?')
+
+        if (username == null) username = ""
+    }
+
+    alert("Welcome " + username + "!");
+
+
+    let submit = document.getElementById('submit')
+    let newTask = document.getElementById('newTask')
+    let tasks = document.getElementById('Tasks')
+    let doneTask = document.getElementById('doneTask')
+
+    let storage = new Array()
+
+    submit.addEventListener('click', (event) => {
+        if (newTask.value != '') {
+            storage.push(newTask.value)
+            console.log(newTask.value)
+            tasks.innerHTML += `<li id=${storage.length - 1} ><button onclick=complete(${storage.length - 1})><i class="fa fa-circle-play"></i> ${newTask.value}</button></li>`
+            newTask.value = ''
+        }
+        else {
+            alert('Fill the field before submit')
+        }
+    })
+
+    function complete(id) {
+        doneTask.innerHTML += `<li>${storage[id]}</li>`
+        document.getElementById(id).style.display = "none"
+    }
+</script>
+
+</html>
